@@ -84,7 +84,7 @@ class GameViewModel : ViewModel() {
             }
 
             if (move != -1) {
-                updateBoard(move, Player.AI)
+                move placeBy Player.AI
 
                 checkWinner()?.let {
                     _gameState.value = it
