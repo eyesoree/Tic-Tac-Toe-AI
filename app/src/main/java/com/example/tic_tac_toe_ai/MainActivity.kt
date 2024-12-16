@@ -39,37 +39,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-@Preview
-@Composable
-fun Greetings() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Red)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(0.8f)
-                .background(Color.White)
-        ) {
-        }
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Yellow)
-        )
-        {
-            Button(onClick = { /*TODO*/ }) {
-
-            }
-
-            Button(onClick = { /*TODO*/ }) {
-
-            }
-        }
-    }
-}

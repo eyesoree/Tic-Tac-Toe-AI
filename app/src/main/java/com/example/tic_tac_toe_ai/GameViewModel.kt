@@ -2,9 +2,6 @@ package com.example.tic_tac_toe_ai
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +13,7 @@ import kotlinx.coroutines.launch
 sealed interface GameState {
     data object Loading : GameState
     data object Idle : GameState
-    data class Error(val message: String) : GameState
+    data class Error(val message: String? = null) : GameState
     data class Success(val winner: Player = Player.NONE) : GameState
 }
 
@@ -50,12 +47,20 @@ class GameViewModel : ViewModel() {
         _difficulty.value = difficulty
     }
 
+    private infix fun Int.placeBy(player: Player) {
+        _boardState.update { currentList ->
+            currentList.toMutableList().apply {
+                this[this@placeBy] = player
+            }
+        }
+    }
+
     fun userMove(index: Int) {
         if (gameState.value !is GameState.Idle || _boardState.value[index] != Player.NONE) {
             return
         }
 
-        updateBoard(index, Player.USER)
+        index placeBy Player.USER
         checkWinner()?.let {
             _gameState.value = it
             return
@@ -67,14 +72,6 @@ class GameViewModel : ViewModel() {
         viewModelScope.launch {
             delay(AI_MOVE_DELAY)
             aiMove()
-        }
-    }
-
-    private fun updateBoard(index: Int, player: Player) {
-        _boardState.update { currentList ->
-            currentList.toMutableList().apply {
-                this[index] = player
-            }
         }
     }
 
