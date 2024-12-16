@@ -8,3 +8,4 @@ Features included from the reporters:
 - Null Safety (reported by Ahmad Badron)
 - Infix Function (reported by Abdul Rahman Mustapha)
 - Higher-Order Function and Lambda (reported by Reynaldo Pahay)
+- Data Class (reported by Albert Jay Rosique)
